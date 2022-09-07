@@ -1,0 +1,41 @@
+(def element MapMarkerShipName (_entityId:number) layout=true
+	(scope
+		(macro SHIP_MARKER_ICON_DATA "_entityId")
+		(var shipName:str = "avatarComponent ? avatarComponent.ship.ref.ship.nameUpper : ''")
+
+		(var colorPresetName:str = "isInSameDivision ? 'division' : toLower(SC.Battle.PLAYER_RELATION.VALUE_TO_NAME[relationComponent.value])")
+
+		#mod
+		(event evShipBecomeInvisible)
+		(var timer:gfx = "$datahub.getSingleComponent(CC.timer)")
+		(var camera:gfx = "$datahub.getSingleComponent(CC.camera)")
+		(var altVision:bool = "camera.altVision" (event "camera.evAltVisionChanged"))
+		(var timerVisiblity:bool = "!mapVisible && altVision")
+		(var timeStamp:number = "timer.currentTime" (event "evShipBecomeInvisible"))
+		(var invisibleTime:number = "timer.currentTime - timeStamp" (event "timer.evInfrequent"))
+		(macro HUMAN_READABLE_COUNTDOWN_SCOPE "invisibleTime")
+		#
+	)
+
+	#mod
+	(dispatch evShipBecomeInvisible (bind trigger "!mapVisible"))
+	#
+
+	(style (width = 100%) (align = "center"))
+	(tf
+		(class $TextDefaultBold9NM)
+		#mod
+		(bind class "timerVisiblity ? SC.Ui_styles.SERVICE_COLORS.WHITE :
+					 				isMultyTeamEnabled && !isAlly	? MULTI_TEAMS_COLOR_CLASSES[teamId]
+																	: TWO_TEAMS_FONT_COLOR_CLASSES[colorPresetName]")
+		#
+		(class $FontEnableReadability)
+		#mod
+		(style
+			(bind fontSize "timerVisiblity	? 11
+											: 9")
+		)
+		(bind text "timerVisiblity ? countdownText : shipName")
+		#
+	)
+)
