@@ -11,14 +11,22 @@
 		(var camera:gfx = "$datahub.getSingleComponent(CC.camera)")
 		(var altVision:bool = "camera.altVision" (event "camera.evAltVisionChanged"))
 		(var timerVisiblity:bool = "!mapVisible && altVision")
+		
 		(var timeStamp:number = "timer.currentTime" (event "evShipBecomeInvisible"))
 		(var invisibleTime:number = "timer.currentTime - timeStamp" (event "timer.evInfrequent"))
 		(macro HUMAN_READABLE_COUNTDOWN_SCOPE "invisibleTime")
+
+		(var mapPos:gfx = "entity.mapPosition.position")
+		(var lastKnownPosX:number = "mapPos.x" (event "evShipBecomeInvisible"))
+		(var lastKnownPosY:number = "mapPos.y" (event "evShipBecomeInvisible"))
+		(var currentPosX:number = "mapPos.x" (event "timer.evInfrequent"))
+		(var currentPosY:number = "mapPos.y" (event "timer.evInfrequent"))
 		#
 	)
 
 	#mod
 	(dispatch evShipBecomeInvisible (bind trigger "!mapVisible"))
+	(dispatch evShipBecomeInvisible (bind trigger "!mapVisible && ((lastKnownPosX != currentPosX) || (lastKnownPosY != currentPosY))"))
 	#
 
 	(style (width = 100%) (align = "center"))
