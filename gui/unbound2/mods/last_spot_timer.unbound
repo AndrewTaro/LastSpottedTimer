@@ -3,7 +3,9 @@
 		(macro SHIP_MARKER_ICON_DATA "_entityId")
 		(var shipName:str = "avatarComponent ? avatarComponent.ship.ref.ship.nameUpper : ''")
 
-		(var colorPresetName:str = "isInSameDivision ? 'division' : toLower(SC.Battle.PLAYER_RELATION.VALUE_TO_NAME[relationComponent.value])")
+		(var colorPresetName:str = "isInSameDivision	?	'division'	
+														:	tkStatus && isAlly	?	'teamkiller' 
+																				: toLower(SC.Battle.PLAYER_RELATION.VALUE_TO_NAME[relationComponent.value])")
 
 		#mod
 		(event evShipBecomeInvisible)
