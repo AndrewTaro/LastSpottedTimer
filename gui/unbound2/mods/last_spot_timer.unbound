@@ -9,6 +9,7 @@
 
 		#mod
 		(event evShipBecomeInvisible)
+		(event evPosChanged)
 		(var timer:gfx = "$datahub.getSingleComponent(CC.timer)")
 		(var camera:gfx = "$datahub.getSingleComponent(CC.camera)")
 		(var altVision:bool = "camera.altVision" (event "camera.evAltVisionChanged"))
@@ -19,16 +20,17 @@
 		(macro HUMAN_READABLE_COUNTDOWN_SCOPE "invisibleTime")
 
 		(var mapPos:gfx = "entity.mapPosition.position")
-		(var lastKnownPosX:number = "mapPos.x" (event "evShipBecomeInvisible"))
-		(var lastKnownPosY:number = "mapPos.y" (event "evShipBecomeInvisible"))
-		(var currentPosX:number = "mapPos.x" (event "timer.evInfrequent"))
-		(var currentPosY:number = "mapPos.y" (event "timer.evInfrequent"))
+		(var lastKnownPosX:number = "mapPos.x" init=false watch=false (event "evShipBecomeInvisible"))
+		(var lastKnownPosY:number = "mapPos.y" init=false watch=false (event "evShipBecomeInvisible"))
+		(var currentPosX:number = "mapPos.x" init=false watch=false (event "timer.evInfrequent")(event "evShipBecomeInvisible"))
+		(var currentPosY:number = "mapPos.y" init=false watch=false (event "timer.evInfrequent")(event "evShipBecomeInvisible"))
 		#
 	)
 
 	#mod
-	(dispatch evShipBecomeInvisible (bind trigger "!mapVisible"))
-	(dispatch evShipBecomeInvisible (bind trigger "!mapVisible && ((lastKnownPosX != currentPosX) || (lastKnownPosY != currentPosY))"))
+	(dispatch evPosChanged (bind enabled "!mapVisible") (bind trigger "lastKnownPosX != currentPosX"))
+	(dispatch evPosChanged (bind enabled "!mapVisible") (bind trigger "lastKnownPosY != currentPosY"))
+	(dispatch evShipBecomeInvisible (bind trigger "!mapVisible") (event "evPosChanged"))
 	#
 
 	(style (width = 100%) (align = "center"))
