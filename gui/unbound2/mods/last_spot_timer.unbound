@@ -1,6 +1,6 @@
-(def element MapMarkerShipName (_entityId:number) layout=true
+(def element MapMarkerShipName (_markerEntity:gfx) layout=true
 	(scope
-		(macro SHIP_MARKER_ICON_DATA "_entityId")
+		(macro SHIP_MARKER_ICON_DATA "_markerEntity.id")
 		(var shipName:str = "avatarComponent ? avatarComponent.ship.ref.ship.nameUpper : ''")
 
 		(var colorPresetName:str = "isInSameDivision	?	'division'	
