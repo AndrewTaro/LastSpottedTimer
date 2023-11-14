@@ -28,11 +28,11 @@
 	)
 
 	#mod
-	(dispatch evPosChanged (bind enabled "!mapVisible") (bind trigger "lastKnownPosX != currentPosX"))
-	(dispatch evPosChanged (bind enabled "!mapVisible") (bind trigger "lastKnownPosY != currentPosY"))
-	(dispatch evShipBecomeInvisible (bind trigger "!mapVisible") (event "evPosChanged"))
+	(dispatch evPosChanged (bind enabled "!mapVisible && (lastKnownPosX != currentPosX)") (bind trigger "currentPosX"))
+	(dispatch evPosChanged (bind enabled "!mapVisible && (lastKnownPosY != currentPosY)") (bind trigger "currentPosY"))
+	(dispatch evShipBecomeInvisible (bind trigger "mapVisible") (event "evPosChanged"))
 	#
-
+	
 	(style (width = 100%) (align = "center"))
 	(tf
 		(class $TextDefaultBold9NM)
