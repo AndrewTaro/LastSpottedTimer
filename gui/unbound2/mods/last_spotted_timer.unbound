@@ -22,8 +22,8 @@
 		(var mapPos:gfx = "entity.mapPosition.position")
 		(var lastKnownPosX:number = "mapPos.x" init=false watch=false (event "evShipBecomeInvisible"))
 		(var lastKnownPosY:number = "mapPos.y" init=false watch=false (event "evShipBecomeInvisible"))
-		(var currentPosX:number = "mapPos.x" init=false watch=false (event "timer.evInfrequent")(event "evShipBecomeInvisible"))
-		(var currentPosY:number = "mapPos.y" init=false watch=false (event "timer.evInfrequent")(event "evShipBecomeInvisible"))
+		(var currentPosX:number = "mapPos.x" init=false watch=false (event "timer.evInfrequent"))
+		(var currentPosY:number = "mapPos.y" init=false watch=false (event "timer.evInfrequent"))
 		#
 	)
 
@@ -37,7 +37,7 @@
 	(tf
 		(class $TextDefaultBold9NM)
 		#mod
-		(bind class "timerVisiblity ? SC.Ui_styles.SERVICE_COLORS.WHITE :
+		(bind class "timerVisiblity ? '$FontColorDefault' :
 					 				isMultyTeamEnabled && !isAlly	? MULTI_TEAMS_COLOR_CLASSES[teamId]
 																	: TWO_TEAMS_FONT_COLOR_CLASSES[colorPresetName]")
 		#
